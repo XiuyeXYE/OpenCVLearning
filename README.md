@@ -1,2 +1,2 @@
 # OpenCVLearning
-OpenCV Learning by Writing codes
+OpenCV Learning by Writing Codes
