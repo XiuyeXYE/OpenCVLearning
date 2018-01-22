@@ -34,6 +34,7 @@ Mat MySmallTwice(const Mat& srcImg){
  * 因为图像放大后,新增像素点的值是未知的,是根据相邻像素点推测的.
  * 而推测的方法可以是过滤器平滑化(smooth)处理哪些无值的点.
  */
+//与OpenCV比较后锯齿处理的不太好,也许还有其他的缺点
 Mat MyLargeTwice(const Mat& srcImg,int oddNum/*声明上写了默认值,此处不写,默认值=3*/){//5x5 7x7 9x9 ...效果差
 
     int rows = srcImg.rows*2;
@@ -55,6 +56,17 @@ Mat MyLargeTwice(const Mat& srcImg,int oddNum/*声明上写了默认值,此处不写,默认值=
     for(int i=0;i<rows;i++){
         for(int j=0;j<cols;j++){
             
+            //以下的这步会影响实现效果
+            //不太好平滑化(smooth)处理后有黑点(麻点)
+            //推测是通道值bgr低的像素多数没有被平滑化(smooth)处理好!
+            // int bv = dstImg1.at<Vec3b>(i,j)[0];
+            // int gv = dstImg1.at<Vec3b>(i,j)[1];
+            // int rv = dstImg1.at<Vec3b>(i,j)[2];
+            
+            // if(bv != 0 || gv != 0 || rv != 0){
+            //     continue;
+            // }
+
             int mid = oddNum/2;
             int r = i-mid;
             int c = j-mid;
