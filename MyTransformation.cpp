@@ -108,3 +108,29 @@ Mat MyLargeTwice(const Mat& srcImg,int oddNum/*声明上写了默认值,此处不写,默认值=
     }
     return dstImg2;
 }
+
+
+Mat MyRGB2Gray(const Mat& srcImg){
+    
+    Mat dst(srcImg.rows,srcImg.cols,CV_8UC1,Scalar::all(0));
+    
+    for(int i=0;i<srcImg.rows;i++){
+        for(int j=0;j<srcImg.cols;j++){
+
+            int b = srcImg.at<Vec3b>(i,j)[0];
+            int g = srcImg.at<Vec3b>(i,j)[1];
+            int r = srcImg.at<Vec3b>(i,j)[2];
+            
+            //这几种灰度化图像方法都可以(其实就是相当于化成单通道图像)
+            //int gray = (b*11+g*59+r*30)/100
+            //int gray = (b*28 + g*151 + r*76)>>8;
+            //int gray = (b + g + r)/3;
+            //0.11 + 0.59 + 0.3 = 1 所以最后的结果不超过255
+            int gray = b*0.11 + g*0.59 + r*0.3;
+
+            dst.at<uchar>(i,j) = saturate_cast<uchar>(gray);
+
+        }
+    }
+    return dst;
+}
