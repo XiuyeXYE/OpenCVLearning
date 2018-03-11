@@ -134,3 +134,26 @@ Mat MyRGB2Gray(const Mat& srcImg){
     }
     return dst;
 }
+
+Mat MyTranslation(Mat& src,int dx,int dy){
+
+    Mat dst(src.rows/* +dy */,src.cols/* +dx */,src.type(),Scalar::all(0));
+
+    for(int i=0;i<src.rows;i++){
+        for(int j=0;j<src.cols;j++){
+
+            int x = j + dx;
+            int y = i + dy;
+            if(x < 0 || y < 0 || x > src.cols - 1 || y > src.rows - 1){
+                continue;
+            }
+            dst.at<Vec3b>(y,x)[0] = src.at<Vec3b>(i,j)[0];
+            dst.at<Vec3b>(y,x)[1] = src.at<Vec3b>(i,j)[1];
+            dst.at<Vec3b>(y,x)[2] = src.at<Vec3b>(i,j)[2];
+
+        }
+
+    }
+
+    return dst;
+}

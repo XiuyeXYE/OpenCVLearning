@@ -3,6 +3,8 @@ using  namespace cv;
 
 int main(){
 
+    TimeSpec::begin();
+
     Mat srcImg = imread("t3.jpg");
     imshow("Origin",srcImg);
     Mat&& dstImg1 = MyLargeTwice(srcImg);
@@ -20,6 +22,8 @@ int main(){
     //注意OpenCV的resize的参数Size是先列后行!
     resize(dstImg2,dstImg3,Size(dstImg2.cols*2,dstImg2.rows*2));
     imshow("OpenCV Pic2",dstImg3);
+
+    TimeSpec::print_cost_time();
 
     waitKey(0);
     return 0;
